@@ -83,7 +83,7 @@ public class CountryList {
     {
         int deletedId = -1;
         if(findCountryByName(name)== null){
-            throw new NoSuchCountryException("Country " + name + "does not exists");
+            throw new NoSuchCountryException("Country " + name + " does not exists");
         } else {
             Iterator itr = countries.iterator();
             while (itr.hasNext())

@@ -1,12 +1,10 @@
 package national_bank_assignment.controller;
 
 import national_bank_assignment.exceptions.DuplicateCountryException;
+import national_bank_assignment.exceptions.NoSuchCountryException;
 import national_bank_assignment.model.Country;
 import national_bank_assignment.model.CountryList;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -61,19 +59,43 @@ public class CountriesController {
                 id = countryList.addCountry(name, continent, pop);
                 response.put("status", 200);
                 response.put("countryId", id);
+                response.put("message", name+ " successfully added");
                 response.put("allCountries", countryList.countries);
             }
 
         } catch (DuplicateCountryException e){
             response.put("status", 400);
-            response.put("message", e);
+            response.put("message", e.getLocalizedMessage());
         } catch (Exception e){
             response.put("status", 400);
-            response.put("message", e);
+            response.put("message", e.getMessage());
         }
 
         return response;
     }
+
+    @RequestMapping(value = "/countries/deleteCountry/{name}", method = RequestMethod.DELETE)
+    public Map<String, Object> deleteCountry(@PathVariable("name") String name){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            int id = countryList.deleteCountryByName(name);
+            response.put("status", 200);
+            response.put("countryId", id);
+            response.put("message", name+ " successfully deleted");
+
+        } catch (NoSuchCountryException e){
+            response.put("status", 404);
+            response.put("message", e.getLocalizedMessage());
+        } catch (Exception e){
+            response.put("status", 400);
+            response.put("message", e.getLocalizedMessage());
+        }
+        return response;
+    }
+
+
+
+
 
 
 

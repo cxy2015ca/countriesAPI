@@ -1,0 +1,12 @@
+//deleteCountryByName
+sample request:
+curl --header "Content-Type: application/json" \
+  --request DELETE \
+http://localhost:8081/countries/deleteCountry/{countryName}
+
+sample response:
+{
+    "message": "Mexico successfully deleted",
+    "countryId": 8,
+    "status": 200
+}
