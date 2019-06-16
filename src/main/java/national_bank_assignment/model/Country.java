@@ -1,4 +1,4 @@
-package national_bank_assignment.controller.model;
+package national_bank_assignment.model;
 
 public class Country {
     int id;
@@ -39,6 +39,7 @@ public class Country {
     public void setContinent(Continent continent) {
         this.continent = continent;
     }
+
 
     public long getPopulation() {
         return population;
