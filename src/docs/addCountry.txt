@@ -1,0 +1,63 @@
+//addCountry
+sample request:
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"name": "Mexico", "continent": "NORTHAMERICA", "population": 37000000}'\
+  http://localhost:8081/countries/addCountry
+
+sample response
+{
+    "allCountries": [
+        {
+            "id": 1,
+            "name": "Canada",
+            "continent": "NORTHAMERICA",
+            "population": 37000000
+        },
+        {
+            "id": 2,
+            "name": "US",
+            "continent": "NORTHAMERICA",
+            "population": 327000000
+        },
+        {
+            "id": 3,
+            "name": "France",
+            "continent": "EUROPE",
+            "population": 67000000
+        },
+        {
+            "id": 4,
+            "name": "China",
+            "continent": "ASIA",
+            "population": 1386000000
+        },
+        {
+            "id": 5,
+            "name": "Australia",
+            "continent": "AUSTRALIA",
+            "population": 24600000
+        },
+        {
+            "id": 6,
+            "name": "Egypt",
+            "continent": "AFRICA",
+            "population": 95500000
+        },
+        {
+            "id": 7,
+            "name": "Brazil",
+            "continent": "SOUTHAMERICA",
+            "population": 209300000
+        },
+        {
+            "id": 8,
+            "name": "Mexico",
+            "continent": "NORTHAMERICA",
+            "population": 37000000
+        }
+    ],
+    "countryId": 8,
+    "status": 200,
+    "message": "Mexico sucessfully added"
+}

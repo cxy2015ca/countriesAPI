@@ -1,4 +1,4 @@
-package national_bank_assignment.controller;
+package national_bank_assignment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
