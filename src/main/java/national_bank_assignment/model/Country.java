@@ -49,6 +49,7 @@ public class Country {
         this.population = population;
     }
 
+    //constructor
     public Country(int id, String name, Continent continent, long population){
         setId(id);
         setName(name);

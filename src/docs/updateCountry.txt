@@ -7,7 +7,7 @@ curl --header "Content-Type: application/json" \
 
 sample response:
 {
-    "updated country": {
+    "updatedCountry": {
         "id": 1,
         "name": "Canada",
         "continent": "NORTHAMERICA",

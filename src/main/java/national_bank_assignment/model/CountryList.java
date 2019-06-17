@@ -22,6 +22,7 @@ public class CountryList {
         countries.add(new Country(7, "Brazil", Country.Continent.SOUTHAMERICA, 209300000));
     }
 
+    // returns country with matching ID
     // if country not found, returns null
     public Country findCountryById(int id)
     {
@@ -33,6 +34,7 @@ public class CountryList {
         return null;
     }
 
+    // returns country with matching name
     // if country not found, returns null
     public Country findCountryByName(String name){
         for(Country country : countries){
@@ -43,6 +45,7 @@ public class CountryList {
         return null;
     }
 
+    // returns countries in the given continent
     // if countries not found, returns empty array
     public ArrayList<Country> findCountryByContinent(Country.Continent continent){
         ArrayList<Country> inContinent = new ArrayList<>();
@@ -54,6 +57,7 @@ public class CountryList {
         return inContinent;
     }
 
+    // returns countries with population less than # given
     // if countries not found, returns empty array
     public ArrayList<Country> findCountryPopulationUnder(long pop){
         ArrayList<Country> underPop = new ArrayList<>();

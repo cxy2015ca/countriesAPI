@@ -13,10 +13,10 @@ import java.util.Map;
 
 @RestController
 public class CountriesController {
-    public CountryList countryList;
+    private CountryList countryList;
 
     @PostConstruct
-    public void init() {
+    public void init() { //creates country "data"
         countryList = new CountryList();
         countryList.init();
     }
@@ -32,7 +32,7 @@ public class CountriesController {
         Map<String, Object> response = new HashMap<>();
         int id = (int) request.get("id");
         Country c = countryList.findCountryById(id);
-        if(c == null){
+        if(c == null){ // c is null if country DNE
             response.put("status", 404);
             response.put("message", "country with id " + id + " does not exist");
         } else {
@@ -45,13 +45,14 @@ public class CountriesController {
 
     @RequestMapping(value = "/countries/addCountry", method = RequestMethod.POST)
     public Map<String, Object> addCountry( @RequestBody Map<String, Object> request){
-        int id = -1;
         Map<String, Object> response = new HashMap<>();
         try{
+            // if any of the fields are missing, do not carry out "Add"
             if (!(request.containsKey("name") && request.containsKey("continent") && request.containsKey("population"))){
                 response.put("status", 400);
-                response.put("message", "missing parameters");
+                response.put("message", "missing country fields");
             } else {
+                int id;
                 String name = (String) request.get("name");
                 String cont = (String) request.get("continent");
                 Country.Continent continent = determineContinent(cont);
@@ -96,13 +97,13 @@ public class CountriesController {
 
     @RequestMapping(value = "/countries/updateCountry", method = RequestMethod.POST)
     public Map<String, Object> updateCountry( @RequestBody Map<String, Object> request){
-        int id = -1;
         Map<String, Object> response = new HashMap<>();
         try{
             if (!(request.containsKey("name") && request.containsKey("continent") && request.containsKey("population"))){
                 response.put("status", 400);
                 response.put("message", "missing fields");
             } else {
+                int id;
                 String name = (String) request.get("name");
                 String cont = (String) request.get("continent");
                 Country.Continent continent = determineContinent(cont);
@@ -112,8 +113,7 @@ public class CountriesController {
                 response.put("status", 200);
                 response.put("countryId", id);
                 response.put("message", name+ " successfully updated");
-                response.put("updated country", countryList.findCountryByName(name));
-//                response.put("allCountries", countryList.countries);
+                response.put("updatedCountry", countryList.findCountryByName(name));
             }
         } catch (DuplicateCountryException e){
             response.put("status", 400);
