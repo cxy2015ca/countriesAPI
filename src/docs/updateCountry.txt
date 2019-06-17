@@ -1,0 +1,19 @@
+//updateCountry
+sample request:
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"name": "Canada", "continent": "NORTHAMERICA", "population": 100}'\
+  http://localhost:8081/countries/updateCountry
+
+sample response:
+{
+    "updated country": {
+        "id": 1,
+        "name": "Canada",
+        "continent": "NORTHAMERICA",
+        "population": 100
+    },
+    "message": "Canada successfully updated",
+    "countryId": 1,
+    "status": 200
+}

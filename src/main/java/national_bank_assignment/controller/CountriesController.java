@@ -88,12 +88,57 @@ public class CountriesController {
             response.put("message", e.getLocalizedMessage());
         } catch (Exception e){
             response.put("status", 400);
-            response.put("message", e.getLocalizedMessage());
+            response.put("message", e.getMessage());
         }
         return response;
     }
 
 
+    @RequestMapping(value = "/countries/updateCountry", method = RequestMethod.POST)
+    public Map<String, Object> updateCountry( @RequestBody Map<String, Object> request){
+        int id = -1;
+        Map<String, Object> response = new HashMap<>();
+        try{
+            if (!(request.containsKey("name") && request.containsKey("continent") && request.containsKey("population"))){
+                response.put("status", 400);
+                response.put("message", "missing fields");
+            } else {
+                String name = (String) request.get("name");
+                String cont = (String) request.get("continent");
+                Country.Continent continent = determineContinent(cont);
+                long pop = Long.valueOf( (int) request.get("population"));
+                id = countryList.deleteCountryByName(name);
+                id = countryList.addCountry(id, name, continent, pop); //maintain the same id
+                response.put("status", 200);
+                response.put("countryId", id);
+                response.put("message", name+ " successfully updated");
+                response.put("updated country", countryList.findCountryByName(name));
+//                response.put("allCountries", countryList.countries);
+            }
+        } catch (DuplicateCountryException e){
+            response.put("status", 400);
+            response.put("message", e.getLocalizedMessage());
+        } catch (Exception e){
+            response.put("status", 400);
+            response.put("message", e.getMessage());
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/countries/findCountriesByContinent/{cont}", method = RequestMethod.GET)
+    public Map<String, Object> findCountriesByContinent( @PathVariable("cont") String contStr){
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Country.Continent cont = determineContinent(contStr);
+            ArrayList<Country> countInCont = countryList.findCountryByContinent(cont);
+            response.put("status", 200);
+            response.put("countries", countInCont);
+        } catch (Exception e){
+            response.put("status", 400);
+            response.put("message", e.getMessage());
+        }
+        return response;
+    }
 
 
 
@@ -104,17 +149,17 @@ public class CountriesController {
     {
         if(cont.equals("ASIA")){
             return Country.Continent.ASIA;
-        } else if(cont.equals("NORTHAMERICA")){
+        } else if(cont.equalsIgnoreCase("NORTHAMERICA")){
             return Country.Continent.NORTHAMERICA;
-        }  else if(cont.equals("SOUTHAMERICA")){
+        }  else if(cont.equalsIgnoreCase("SOUTHAMERICA")){
             return Country.Continent.SOUTHAMERICA;
-        } else if(cont.equals("EUROPE")){
+        } else if(cont.equalsIgnoreCase("EUROPE")){
             return Country.Continent.EUROPE;
-        } else if(cont.equals("ANTARTICA")){
+        } else if(cont.equalsIgnoreCase("ANTARTICA")){
             return Country.Continent.ANTARTICA;
-        } else if(cont.equals("AUSTRALIA")){
+        } else if(cont.equalsIgnoreCase("AUSTRALIA")){
             return Country.Continent.AUSTRALIA;
-        } else if(cont.equals("AFRICA")){
+        } else if(cont.equalsIgnoreCase("AFRICA")){
             return Country.Continent.AFRICA;
         } else {
             throw new Exception("invalid continent " + cont);

@@ -4,7 +4,6 @@ import national_bank_assignment.exceptions.DuplicateCountryException;
 import national_bank_assignment.exceptions.NoSuchCountryException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 public class CountryList {
@@ -67,15 +66,27 @@ public class CountryList {
     }
 
     //add country, returns ID if success, else throws exception
+    // may be better style to return the country instead of just the id
     public int addCountry(String name, Country.Continent continent, long population) throws Exception
     {
         int newId = countries.size() + 1;
         if(findCountryByName(name)!= null){
-            throw new DuplicateCountryException("Country " + name+ "already exists");
+            throw new DuplicateCountryException("Country " + name+ " already exists");
         } else {
             countries.add(new Country(newId, name, continent, population));
         }
         return newId;
+    }
+
+    // overload for using a given an id
+    public int addCountry(int id, String name, Country.Continent continent, long population) throws Exception
+    {
+        if(findCountryByName(name)!= null){
+            throw new DuplicateCountryException("Country " + name+ " already exists");
+        } else {
+            countries.add(new Country(id, name, continent, population));
+        }
+        return id;
     }
 
     //deletes the country and returns the id, throws exception if country does not exist
@@ -91,12 +102,14 @@ public class CountryList {
                 Country c = (Country) itr.next();
                 if(name.equals(c.name)){
                     deletedId = c.getId();
-                    countries.remove(itr);
+                    itr.remove();
                 }
             }
         }
         return deletedId;
     }
+
+
 
 
 

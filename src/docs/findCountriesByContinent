@@ -1,0 +1,24 @@
+//findCountriesByContinent
+sample request:
+curl --header "Content-Type: application/json" \
+  --request GET \
+http://localhost:8081/countries/findCountriesByContinent/{continent}
+
+sample response:
+{
+    "countries": [
+        {
+            "id": 1,
+            "name": "Canada",
+            "continent": "NORTHAMERICA",
+            "population": 37000000
+        },
+        {
+            "id": 2,
+            "name": "US",
+            "continent": "NORTHAMERICA",
+            "population": 327000000
+        }
+    ],
+    "status": 200
+}
